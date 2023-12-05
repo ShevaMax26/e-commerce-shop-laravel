@@ -1,0 +1,62 @@
+version: "3.7"
+
+services:
+    nginx:
+        image: nginx:latest
+        volumes:
+            - ./:/var/www/${APP_NAME}
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+            - ./public:/var/www/html/public
+            - ./storage/app:/var/www/html/storage/app
+        ports:
+            - "8080:80"
+        depends_on:
+            - app
+            - db
+        container_name: ${APP_NAME}_nginx
+        restart: unless-stopped
+
+    app:
+        build:
+            context: .
+            dockerfile: docker/app/Dockerfile
+        volumes:
+            - ./:/var/www/${APP_NAME}
+        depends_on:
+            - db
+        container_name: ${APP_NAME}_app
+        restart: unless-stopped
+
+    search:
+        container_name: ${APP_NAME}_elasticsearch
+        image: elasticsearch:7.17.15
+        ports:
+            - "6201:9200"
+        environment:
+            - discovery.type=single-node
+        restart: unless-stopped
+    db:
+        image: mysql:8.0
+        container_name: ${APP_NAME}_db
+        ports:
+            - 8101:3306
+        command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+        volumes:
+            - ./mysql_data:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: e_commerce_shop_laravel
+            MYSQL_ROOT_PASSWORD: root
+        restart: always
+#        restart: unless-stopped
+
+#    db:
+#        image: postgres:14-alpine
+#        environment:
+#            POSTGRES_USER: ${DB_USERNAME}
+#            POSTGRES_PASSWORD: ${DB_PASSWORD}
+#            POSTGRES_DB: ${DB_DATABASE}
+#        volumes:
+#            - ./postgres_data:/var/lib/postgresql/data/
+#        ports:
+#            - "5433:5432"
+#        container_name: ${APP_NAME}_db
