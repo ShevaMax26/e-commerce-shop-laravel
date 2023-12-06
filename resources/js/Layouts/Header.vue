@@ -8,47 +8,66 @@ import {ref} from "vue";
 import NavLink from "@/Components/NavLink.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
-// import IconCounter from "@/Components/IconCounter.vue";
+// import LanguageSelector from "@/Components/LanguageSelector.vue";
+import CatalogMenuModal from "@/Components/CatalogMenuModal.vue";
+
+import IconCounter from "@/Components/IconCounter.vue";
+
+
+const showingNavigationDropdown = ref(false);
+
+const activeClass = 'text-blue-500';
+
+function isActive(path) {
+  return route().current() === path || route().current().includes(path);
+}
+
+function logout() {
+  this.$inertia.delete(route('logout'))
+}
 
 </script>
 
 <template>
-  <nav class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16">
-        <div class="flex">
-          <!-- Logo -->
-          <div class="shrink-0 flex items-center">
-            <Link :href="route('dashboard')">
-              <ApplicationLogo
-                  class="block h-9 w-auto fill-current text-gray-800"
-              />
-            </Link>
+  <header>
+    <nav class="nav bg-dark-site border-b border-header">
+      <!-- Primary Navigation Menu -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <!-- Logo -->
+            <div class="flex items-center mr-6">
+              <Link :href="route('home')">
+                <ApplicationLogo
+                    class="block h-9 w-auto fill-current text-gray-800"
+                />
+              </Link>
+            </div>
+            <!-- Navigation Links -->
+            <div class="hidden md:flex md:items-center md:gap-6">
+              <NavLink :href="route('home')"
+                       :active="route().current('home')"
+              >
+                Головна
+              </NavLink>
+            </div>
           </div>
 
-          <!-- Navigation Links -->
-          <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-            <NavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')">
-              Dashboard
-            </NavLink>
-          </div>
-        </div>
-
-        <div class="hidden sm:flex sm:items-center sm:ms-6">
-          <!-- Settings Dropdown -->
-          <div v-if="$page.props.auth.user" class="ms-3 relative">
-            <Dropdown align="right" width="48">
-              <template #trigger>
+          <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <!--          <LanguageSelector/>-->
+            <!-- Settings Dropdown -->
+            <div v-if="$page.props.auth.user" class="ml-3 relative">
+              <Dropdown align="right" width="48">
+                <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white hover:text-gray focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg
-                                                    class="ms-2 -me-0.5 h-4 w-4"
+                                                    class="ml-2 -mr-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"
@@ -61,104 +80,175 @@ import DropdownLink from "@/Components/DropdownLink.vue";
                                                 </svg>
                                             </button>
                                         </span>
-              </template>
+                </template>
 
-              <template #content>
-                <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
-                <DropdownLink :href="route('logout')" method="post" as="button">
-                  Log Out
-                </DropdownLink>
-              </template>
-            </Dropdown>
+                <template #content>
+                  <DropdownLink :href="route('profile.edit')">Профіль</DropdownLink>
+                  <DropdownLink v-if="$page.props.auth.canAccessAdminPanel" :inertia="false" href="/admin">Адмін
+                  </DropdownLink>
+                  <DropdownLink :href="route('logout')" method="post" as="button">Вийти</DropdownLink>
+                </template>
+              </Dropdown>
+            </div>
+
+            <template v-else>
+              <NavLink v-if="$page.props.canRegister"
+                       :href="route('register')"
+                       :active="route().current('register')"
+                       class="nav-link nav-link--white">
+                Реєстрація
+              </NavLink>
+              <NavLink v-if="$page.props.canLogin"
+                       :active="route().current('login')"
+                       :href="route('login')"
+                       class="nav-link nav-link--white">
+                                <span
+                                    class="mr-1"
+                                >Вхід
+                                    </span>
+                <i class="fa-solid fa-user pt-[0.15em]"></i>
+              </NavLink>
+            </template>
           </div>
 
-          <template v-else>
-            <Link
-                :href="route('login')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Log in</Link
+          <!-- Hamburger -->
+          <div class="-mr-2 flex items-center md:hidden">
+            <button
+                @click="showingNavigationDropdown = !showingNavigationDropdown"
+                class="inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none transition duration-150 ease-in-out"
             >
-
-            <Link
-                v-if="$page.props.canRegister"
-                :href="route('register')"
-                class="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-            >Register</Link>
-          </template>
-        </div>
-
-        <!-- Hamburger -->
-        <div class="-me-2 flex items-center sm:hidden">
-          <button
-              @click="showingNavigationDropdown = !showingNavigationDropdown"
-              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-          >
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path
-                  :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex': !showingNavigationDropdown,
-                                        }"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-              />
-              <path
-                  :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex': showingNavigationDropdown,
-                                        }"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div
-        v-if="$page.props.auth.user"
-        :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
-        class="sm:hidden"
-    >
-      <div class="pt-2 pb-3 space-y-1">
-        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-          Dashboard
-        </ResponsiveNavLink>
-      </div>
-
-      <!-- Responsive Settings Options -->
-      <div class="pt-4 pb-1 border-t border-gray-200">
-        <div class="px-4">
-          <div class="font-medium text-base text-gray-800">
-            {{ $page.props.auth.user.name }}
+              <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                <path
+                    :class="{
+                    hidden: showingNavigationDropdown,
+                    'inline-flex': !showingNavigationDropdown,
+                  }"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                />
+                <path
+                    :class="{
+                    hidden: !showingNavigationDropdown,
+                    'inline-flex': showingNavigationDropdown,
+                  }"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
-          <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
         </div>
+      </div>
 
-        <div class="mt-3 space-y-1">
-          <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
-          <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-            Log Out
+      <!-- Responsive Navigation Menu -->
+      <div
+          :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }"
+          class="md:hidden"
+      >
+        <div class="pt-2 pb-3 space-y-1">
+          <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
+            Головна
+          </ResponsiveNavLink>
+          <ResponsiveNavLink v-if="$page.props.canRegister"
+                             :active="route().current('register')"
+                             :href="route('register')">
+            Реєстрація
+          </ResponsiveNavLink>
+          <ResponsiveNavLink v-if="$page.props.canLogin"
+                             :active="route().current('login')"
+                             :href="route('login')">
+                                <span
+                                    class="mr-1"
+                                >Вхід
+                                    </span>
+            <i class="fa-solid fa-user pt-[0.15em]"></i>
           </ResponsiveNavLink>
         </div>
-      </div>
-    </div>
-  </nav>
 
-  <!-- Page Heading -->
-  <header class="bg-white shadow" v-if="$slots.header">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <slot name="header" />
+        <!-- Responsive Settings Options -->
+        <div v-if="$page.props.auth.user" class="pt-4 pb-1 border-t border-gray-800">
+          <div class="px-4">
+            <div class="font-medium text-white">
+              {{ $page.props.auth.user.name }}
+            </div>
+            <div class="font-medium text-sm text-gray-400">{{ $page.props.auth.user.email }}</div>
+          </div>
+
+          <div class="mt-3 space-y-1">
+            <ResponsiveNavLink :href="route('profile.edit')">Профіль</ResponsiveNavLink>
+            <ResponsiveNavLink v-if="$page.props.auth.canAccessAdminPanel" :inertia="false" href="/admin">Адмін
+            </ResponsiveNavLink>
+            <ResponsiveNavLink :href="route('logout')" method="post" as="button">
+              Вихід
+            </ResponsiveNavLink>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Heading -->
+    <div class="bg-dark-site shadow">
+      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
+        <div class="flex items-center justify-center">
+          <CatalogMenuModal/>
+        </div>
+        <div class="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 sm:gap-2 lg:flex lg:items-center lg:gap-6">
+          <NavLink href="#"><span class="text-white">Бренди</span></NavLink>
+          <NavLink href="#"><span class="text-white">Сервіс</span></NavLink>
+          <NavLink href="#"><span class="text-white">Послуги</span></NavLink>
+          <NavLink href="#"><span class="text-white">Підтримка</span></NavLink>
+          <NavLink href="#"><span class="text-white">Про компанію</span></NavLink>
+          <NavLink href="#"><span class="text-white">Блог</span></NavLink>
+          <NavLink href="#"><span class="text-white">Де купити</span></NavLink>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <IconCounter href="#" :count="15">
+            <img src="/img/front/heart.svg" alt="heart">
+          </IconCounter>
+          <IconCounter href="#" :count="2">
+            <img src="/img/front/cart.svg" alt="cart">
+          </IconCounter>
+        </div>
+        <slot name="header"/>
+      </div>
     </div>
   </header>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import "./resources/scss/_variables.scss";
 
+.bg-dark-site {
+  background: $main-dark;
+}
+
+.border-header {
+  border-bottom-color: rgba(133, 143, 164, 0.15);
+}
+
+.c-text-gray {
+  color: $text-gray;
+}
+
+.nav-link {
+  color: $text-gray;
+  text-align: right;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+
+  &:hover {
+    color: #FFF;
+  }
+
+  &--white {
+    color: #FFF;
+  }
+}
 </style>

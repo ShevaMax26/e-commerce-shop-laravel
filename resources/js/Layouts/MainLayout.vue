@@ -1,8 +1,6 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
-import Header from "@/Layouts/Header.vue";
 import Footer from "@/Layouts/Footer.vue";
+import Header from "@/Layouts/Header.vue";
 </script>
 
 <template>
