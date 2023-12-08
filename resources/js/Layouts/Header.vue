@@ -50,7 +50,7 @@ function logout() {
               <NavLink :href="route('home')"
                        :active="route().current('home')"
               >
-                Головна
+                {{ __('Main') }}
               </NavLink>
             </div>
           </div>
@@ -85,10 +85,10 @@ function logout() {
                 </template>
 
                 <template #content>
-                  <DropdownLink :href="route('profile.edit')">Профіль</DropdownLink>
-                  <DropdownLink v-if="$page.props.auth.canAccessAdminPanel" :inertia="false" href="/admin">Адмін
+                  <DropdownLink :href="route('profile.edit')">{{ __('Personal office') }}</DropdownLink>
+                  <DropdownLink v-if="$page.props.auth.canAccessAdminPanel" :inertia="false" href="/admin">{{ __('Admin') }}
                   </DropdownLink>
-                  <DropdownLink :href="route('logout')" method="post" as="button">Вийти</DropdownLink>
+                  <DropdownLink :href="route('logout')" method="post" as="button">{{ __('Go out') }}</DropdownLink>
                 </template>
               </Dropdown>
             </div>
@@ -98,7 +98,7 @@ function logout() {
                        :href="route('register')"
                        :active="route().current('register')"
                        class="nav-link nav-link--white">
-                Реєстрація
+                {{ __('Register') }}
               </NavLink>
               <NavLink v-if="$page.props.canLogin"
                        :active="route().current('login')"
@@ -106,7 +106,7 @@ function logout() {
                        class="nav-link nav-link--white">
                                 <span
                                     class="mr-1"
-                                >Вхід
+                                >{{ __('Sign in') }}
                                     </span>
                 <i class="fa-solid fa-user pt-[0.15em]"></i>
               </NavLink>
@@ -153,19 +153,19 @@ function logout() {
       >
         <div class="pt-2 pb-3 space-y-1">
           <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
-            Головна
+            {{ __('Main') }}
           </ResponsiveNavLink>
           <ResponsiveNavLink v-if="$page.props.canRegister"
                              :active="route().current('register')"
                              :href="route('register')">
-            Реєстрація
+            {{ __('Register') }}
           </ResponsiveNavLink>
           <ResponsiveNavLink v-if="$page.props.canLogin"
                              :active="route().current('login')"
                              :href="route('login')">
                                 <span
                                     class="mr-1"
-                                >Вхід
+                                >{{ __('Sign in') }}
                                     </span>
             <i class="fa-solid fa-user pt-[0.15em]"></i>
           </ResponsiveNavLink>
@@ -181,11 +181,11 @@ function logout() {
           </div>
 
           <div class="mt-3 space-y-1">
-            <ResponsiveNavLink :href="route('profile.edit')">Профіль</ResponsiveNavLink>
-            <ResponsiveNavLink v-if="$page.props.auth.canAccessAdminPanel" :inertia="false" href="/admin">Адмін
+            <ResponsiveNavLink :href="route('profile.edit')">{{ __('Personal office') }}</ResponsiveNavLink>
+            <ResponsiveNavLink v-if="$page.props.auth.canAccessAdminPanel" :inertia="false" href="/admin">{{ __('Admin') }}
             </ResponsiveNavLink>
             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-              Вихід
+              {{ __('Go out') }}
             </ResponsiveNavLink>
           </div>
         </div>
@@ -199,13 +199,13 @@ function logout() {
           <CatalogMenuModal/>
         </div>
         <div class="hidden sm:grid sm:grid-cols-3 md:grid-cols-4 sm:gap-2 lg:flex lg:items-center lg:gap-6">
-          <NavLink href="#"><span class="text-white">Бренди</span></NavLink>
-          <NavLink href="#"><span class="text-white">Сервіс</span></NavLink>
-          <NavLink href="#"><span class="text-white">Послуги</span></NavLink>
-          <NavLink href="#"><span class="text-white">Підтримка</span></NavLink>
-          <NavLink href="#"><span class="text-white">Про компанію</span></NavLink>
-          <NavLink href="#"><span class="text-white">Блог</span></NavLink>
-          <NavLink href="#"><span class="text-white">Де купити</span></NavLink>
+          <NavLink href="#"><span class="text-white">{{ __('Brands') }}</span></NavLink>
+          <NavLink href="#"><span class="text-white">{{ __('Service') }}</span></NavLink>
+          <NavLink href="#"><span class="text-white">{{ __('Services') }}</span></NavLink>
+          <NavLink href="#"><span class="text-white">{{ __('Support') }}</span></NavLink>
+          <NavLink href="#"><span class="text-white">{{ __('About Company') }}</span></NavLink>
+          <NavLink href="#"><span class="text-white">{{ __('Blog') }}</span></NavLink>
+          <NavLink href="#"><span class="text-white">{{ __('Where to Buy') }}</span></NavLink>
         </div>
 
         <div class="flex items-center gap-6">
@@ -223,7 +223,7 @@ function logout() {
 </template>
 
 <style scoped lang="scss">
-@import "./resources/scss/_variables.scss";
+@import "/resources/scss/_variables.scss";
 
 .bg-dark-site {
   background: $main-dark;

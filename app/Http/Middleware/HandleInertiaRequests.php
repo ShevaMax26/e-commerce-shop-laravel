@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Inertia\Middleware;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -47,6 +48,17 @@ class HandleInertiaRequests extends Middleware
             'canRegister' => Route::has('register'),
             'locale' => function () {
                 return app()->getLocale();
+            },
+            'language' => function () {
+                $filePath = base_path('/lang/' . app()->getLocale() . '.json');
+
+                if (!File::exists($filePath)) {
+                    return [];
+                }
+                return json_decode(
+                    File::get($filePath),
+                    true
+                );
             },
             'languageSelector' => $this->generateSwitchLinks(),
         ];

@@ -18,7 +18,7 @@ import SocialIcon from "@/Components/SocialIcon.vue";
             <ApplicationLogo class="block h-9 w-auto fill-current text-gray-800"/>
           </Link>
           <div class="footer-policy__text">
-            © WellFitness. 2023
+            © WellFitness. 2023 {{ __('All rights reserved') }}
           </div>
         </div>
         <SocialIcons>
