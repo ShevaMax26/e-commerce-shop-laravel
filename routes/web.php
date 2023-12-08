@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +18,17 @@ use Inertia\Inertia;
 |
 */
 
-Route::controller(IndexController::class)->group(function () {
-    Route::get('/', 'index')->name('home');
-});;
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localizationRedirect']
+], function () {
+    Route::controller(IndexController::class)->group(function () {
+        Route::get('/', 'index')->name('home');
+    });
+    Route::get('/test', function () {
+        dd(LaravelLocalization::setLocale());
+    });
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -31,4 +40,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
