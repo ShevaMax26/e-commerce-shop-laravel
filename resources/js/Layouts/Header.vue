@@ -1,22 +1,24 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-// import Dropdown from '@/Components/Dropdown.vue';
-// import DropdownLink from '@/Components/DropdownLink.vue';
+import Dropdown from '@/Components/Dropdown.vue';
+import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import {Link, usePage} from '@inertiajs/vue3';
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import NavLink from "@/Components/NavLink.vue";
-import Dropdown from "@/Components/Dropdown.vue";
-import DropdownLink from "@/Components/DropdownLink.vue";
-// import LanguageSelector from "@/Components/LanguageSelector.vue";
-import CatalogMenuModal from "@/Components/CatalogMenuModal.vue";
-
 import IconCounter from "@/Components/IconCounter.vue";
+import CatalogMenuModal from "@/Components/CatalogMenuModal.vue";
+import LanguageSelector from "@/Components/LanguageSelector.vue";
+import Link from "@/Components/Link.vue";
+import {usePage} from "@inertiajs/vue3";
+// import { useStore } from 'vuex';
 
-
+// const store = useStore();
+const page = usePage()
 const showingNavigationDropdown = ref(false);
-
 const activeClass = 'text-blue-500';
+
+// store.commit('setFavoriteIds', Object.values(page.props.favoriteIds));
+// const favoriteIds = computed(() => store.state.favoriteIds);
 
 function isActive(path) {
   return route().current() === path || route().current().includes(path);
@@ -53,8 +55,8 @@ function logout() {
             </div>
           </div>
 
-          <div class="hidden sm:flex sm:items-center sm:ms-6">
-            <!--          <LanguageSelector/>-->
+          <div class="hidden md:flex md:items-center md:ml-6 md:gap-6">
+            <LanguageSelector/>
             <!-- Settings Dropdown -->
             <div v-if="$page.props.auth.user" class="ml-3 relative">
               <Dropdown align="right" width="48">

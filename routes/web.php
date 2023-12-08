@@ -26,7 +26,7 @@ Route::group([
         Route::get('/', 'index')->name('home');
     });
     Route::get('/test', function () {
-        dd(LaravelLocalization::setLocale());
+        dd(1111);
     });
 });
 
