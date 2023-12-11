@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e6859e8371fc298b19290d97bb740c3",
+    "content-hash": "b9d9201f9b846206dff358c2f32c9777",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -963,6 +963,118 @@
                 }
             ],
             "time": "2023-08-10T19:36:49+00:00"
+        },
+        {
+            "name": "efureev/laravel-trees",
+            "version": "v3.8.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/efureev/laravel-trees.git",
+                "reference": "a7145b0544eb60177adb4e691905d823abee7a4b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/efureev/laravel-trees/zipball/a7145b0544eb60177adb4e691905d823abee7a4b",
+                "reference": "a7145b0544eb60177adb4e691905d823abee7a4b",
+                "shasum": ""
+            },
+            "require": {
+                "efureev/support": "^4.16",
+                "illuminate/database": "^8.8|^9.25|^10.0",
+                "illuminate/events": "^8.80|^9.25|^10.0",
+                "php": "^8.0|^8.1|^8.2"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.20",
+                "orchestra/testbench": "^6.17|^7.22|8.0",
+                "phpunit/phpunit": "^9.5|^10.0",
+                "squizlabs/php_codesniffer": "^3.7",
+                "symfony/var-dumper": "^5.2|^6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Fureev\\Trees\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eugene Fureev",
+                    "email": "fureev@gmail.com"
+                }
+            ],
+            "description": "Multi-Tree structures for Laravel",
+            "keywords": [
+                "laravel",
+                "multi-tree",
+                "package",
+                "php",
+                "tree"
+            ],
+            "support": {
+                "issues": "https://github.com/efureev/laravel-trees/issues",
+                "source": "https://github.com/efureev/laravel-trees/tree/v3.8.4"
+            },
+            "time": "2023-09-15T07:38:28+00:00"
+        },
+        {
+            "name": "efureev/support",
+            "version": "v4.25.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/efureev/php-support.git",
+                "reference": "49300df5aa5908526392a2a2164933204f665555"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/efureev/php-support/zipball/49300df5aa5908526392a2a2164933204f665555",
+                "reference": "49300df5aa5908526392a2a2164933204f665555",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^8.1|^8.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10.14",
+                "phpunit/phpunit": "^10.1.1",
+                "squizlabs/php_codesniffer": "^3.7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Global/base.php"
+                ],
+                "psr-4": {
+                    "Php\\Support\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eugene Fureev",
+                    "homepage": "https://github.com/efureev"
+                }
+            ],
+            "description": "PHP Support Package is a collection of useful functions and snippets",
+            "keywords": [
+                "helpers",
+                "php",
+                "support",
+                "utility"
+            ],
+            "support": {
+                "issues": "https://github.com/efureev/php-support/issues",
+                "source": "https://github.com/efureev/php-support/tree/v4.25.0"
+            },
+            "time": "2023-11-12T09:44:30+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -4933,6 +5045,80 @@
                 }
             ],
             "time": "2022-12-18T12:58:32+00:00"
+        },
+        {
+            "name": "spatie/eloquent-sortable",
+            "version": "4.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/eloquent-sortable.git",
+                "reference": "74994d10a17d15d2cdb319d6b2ad7cb6fa067c0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/eloquent-sortable/zipball/74994d10a17d15d2cdb319d6b2ad7cb6fa067c0a",
+                "reference": "74994d10a17d15d2cdb319d6b2ad7cb6fa067c0a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^9.0|^10.0",
+                "illuminate/support": "^9.0|^10.0",
+                "nesbot/carbon": "^2.63",
+                "php": "^8.1",
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\EloquentSortable\\EloquentSortableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\EloquentSortable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be"
+                }
+            ],
+            "description": "Sortable behaviour for eloquent models",
+            "homepage": "https://github.com/spatie/eloquent-sortable",
+            "keywords": [
+                "behaviour",
+                "eloquent",
+                "laravel",
+                "model",
+                "sort",
+                "sortable"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/eloquent-sortable/issues",
+                "source": "https://github.com/spatie/eloquent-sortable/tree/4.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-23T08:34:14+00:00"
         },
         {
             "name": "spatie/invade",
