@@ -13,6 +13,8 @@ const props = defineProps({
 <template>
   <Head title="Home"/>
   <MainLayout>
-    <MainSlider :sliders="sliders"></MainSlider>
+    <MainSlider :sliders="sliders"
+                style="transition: 0.25s ease-out"
+                v-motion-slide-bottom/>
   </MainLayout>
 </template>
