@@ -10,11 +10,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
 class Category extends Model implements TreeConfigurable, Sortable
 {
-    use HasFactory, NestedSetTrait, SoftDeletes, HasTranslations, SortableTrait;
+    use HasFactory, NestedSetTrait, SoftDeletes, HasTranslations, HasSlug, SortableTrait;
 
     public array $translatable = ['name'];
 
@@ -48,6 +50,13 @@ class Category extends Model implements TreeConfigurable, Sortable
         );
     }
 
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->doNotGenerateSlugsOnUpdate()
+            ->saveSlugsTo('slug');
+    }
 
     public function getImgUrl(): string
     {
