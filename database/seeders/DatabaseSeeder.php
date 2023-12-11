@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             UserSeeder::class,
             SliderSeeder::class,
+            CategorySeeder::class,
         ]);
 
         Product::factory()->count(10)->create();

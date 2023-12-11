@@ -24,6 +24,11 @@ class Category extends Model implements TreeConfigurable, Sortable
 
     public $fillable = ['name', 'slug', 'order', 'image'];
 
+    public array $sortable = [
+        'order_column_name' => 'order',
+        'sort_when_creating' => true,
+    ];
+
     protected static function buildTreeConfig(): Base
     {
         return new Base(true);
