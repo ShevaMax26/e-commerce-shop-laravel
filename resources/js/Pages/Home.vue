@@ -2,12 +2,13 @@
 import {Head} from '@inertiajs/vue3';
 import MainLayout from "@/Layouts/MainLayout.vue";
 import MainSlider from "@/Components/MainSlider.vue";
+import HomeGym from "@/Components/HomeGym.vue";
 
 const props = defineProps({
   title: String,
   sliders: Array,
+  homeGymCats: Array,
 });
-
 </script>
 
 <template>
@@ -16,5 +17,8 @@ const props = defineProps({
     <MainSlider :sliders="sliders"
                 style="transition: 0.25s ease-out"
                 v-motion-slide-bottom/>
+    <HomeGym :categories="homeGymCats"
+             style="transition: 0.25s ease-out"
+             v-motion-slide-bottom/>
   </MainLayout>
 </template>

@@ -7,7 +7,6 @@ defineProps({
         categories: Array,
     }
 )
-
 </script>
 
 <template>
@@ -33,7 +32,6 @@ defineProps({
         </div>
         <DefaultButton :text="__('All categories')" :href="route('catalog', 'trenazeri-dlia-domu')"/>
     </div>
-
 </template>
 
 
