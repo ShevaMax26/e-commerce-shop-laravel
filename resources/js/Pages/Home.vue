@@ -3,11 +3,13 @@ import {Head} from '@inertiajs/vue3';
 import MainLayout from "@/Layouts/MainLayout.vue";
 import MainSlider from "@/Components/MainSlider.vue";
 import HomeGym from "@/Components/HomeGym.vue";
+import FitnessClubGym from "@/Components/FitnessClubGym.vue";
 
 const props = defineProps({
   title: String,
   sliders: Array,
   homeGymCats: Array,
+  fitnessClubGymCats: Array,
 });
 </script>
 
@@ -20,5 +22,8 @@ const props = defineProps({
     <HomeGym :categories="homeGymCats"
              style="transition: 0.25s ease-out"
              v-motion-slide-bottom/>
+    <FitnessClubGym :categories="fitnessClubGymCats"
+                    style="transition: 0.25s ease-out"
+                    v-motion-slide-visible-once-bottom/>
   </MainLayout>
 </template>
