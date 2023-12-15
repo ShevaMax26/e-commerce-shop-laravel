@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RolePermissionSeeder::class,
-            UserSeeder::class,
-            SliderSeeder::class,
-            CategorySeeder::class,
+//            RolePermissionSeeder::class,
+//            UserSeeder::class,
+//            SliderSeeder::class,
+//            CategorySeeder::class,
+//            BrandSeeder::class,
         ]);
 
         Product::factory()->count(10)->create();
