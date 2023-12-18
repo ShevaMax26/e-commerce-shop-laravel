@@ -6,8 +6,8 @@ services:
         volumes:
             - ./:/var/www/${APP_NAME}
             - ./docker/nginx/conf.d:/etc/nginx/conf.d
-            - ./public:/var/www/html/public
-            - ./storage/app:/var/www/html/storage/app
+            - ./public:/var/www/${APP_NAME}/public
+            - ./storage/app:/var/www/${APP_NAME}/storage/app
         ports:
             - "8080:80"
         depends_on:
