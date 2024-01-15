@@ -76,6 +76,7 @@ class ProductResource extends Resource
                     ->content(fn(?Product $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
 
                 SpatieMediaLibraryFileUpload::make('media')
+                    ->label('Images')
                     ->multiple()
                     ->enableReordering(),
 
