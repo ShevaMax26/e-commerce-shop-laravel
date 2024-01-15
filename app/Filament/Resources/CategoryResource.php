@@ -5,18 +5,21 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CategoryResource\Pages;
 use App\Filament\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
+use CodeWithDennis\FilamentSelectTree\SelectTree;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
+use Filament\Resources\Concerns\Translatable;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CategoryResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Category::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -31,7 +34,39 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                //
+                SelectTree::make('parent_id')
+                    ->label('Parent')
+                    ->relationship('parent', 'name', 'parent_id')
+                    ->placeholder(__('Please select a category'))
+                    ->saveRelationshipsUsing(function (Category $childNode, $state) {
+                        if (!$state) {
+                            return;
+                        }
+                        $parentNode = Category::find($state);
+                        $childNode->appendTo($parentNode)->save();
+                    })
+                    ->withCount()
+                    ->enableBranchNode()
+                    ->searchable(),
+
+                Forms\Components\TextInput::make('name')
+                    ->required(),
+
+                Forms\Components\TextInput::make('slug')
+                    ->hiddenOn('create')
+                    ->required()
+                    ->maxLength(60),
+
+                FileUpload::make('image')
+                    ->image()
+                    ->directory('categories')
+                    ->imageEditor(),
+
+                Forms\Components\TextInput::make('order')
+                    ->hiddenOn('create')
+                    ->required()
+                    ->numeric()
+                    ->default(0)
             ]);
     }
 
