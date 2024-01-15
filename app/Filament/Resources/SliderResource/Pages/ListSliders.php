@@ -9,8 +9,7 @@ use Filament\Resources\Pages\ListRecords;
 
 class ListSliders extends ListRecords
 {
-    use Translatable;
-
+    use ListRecords\Concerns\Translatable;
     protected static string $resource = SliderResource::class;
 
     protected function getHeaderActions(): array
